@@ -19,6 +19,7 @@ const Home = () => {
 			if(data.acknowledged){
 
 				const remainingProduct = displayProducts.filter(item => item._id !== product._id)
+
 				setDisplayProducts(remainingProduct)
 
 				toast.success('Successfully deleted')
@@ -35,7 +36,7 @@ const Home = () => {
     <div className="flex flex-col max-w-2xl mx-auto p-6 space-y-4 sm:p-10 dark:bg-gray-900 dark:text-gray-100">
      <div className="text-center mb-5">
      <h2 className="text-xl font-semibold">
-        Total product: {displayProducts.length}
+        Total products: {displayProducts.length}
       </h2>
       <Link to="/products/add-product">
         <button
