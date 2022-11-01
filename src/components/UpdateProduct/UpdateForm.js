@@ -1,4 +1,5 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 
 const UpdateForm = ({productInfo}) => {
 
@@ -17,7 +18,17 @@ const UpdateForm = ({productInfo}) => {
             body:JSON.stringify(product)
         })
         .then(res=>res.json())
-        .then(data=>console.log(data))
+        .then(data=>{
+            if(data.modifiedCount>0){
+
+                toast.success('Product updated successfully')
+
+            }
+            else if(data.upsertedCount>0){
+                toast.success('New product inserted')
+            }
+            console.log(data)
+        })
     }
 
     const handleInput = (e)=>{
