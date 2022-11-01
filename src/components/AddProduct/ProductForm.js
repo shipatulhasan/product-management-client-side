@@ -1,0 +1,67 @@
+import React from 'react';
+import toast from 'react-hot-toast';
+
+
+const ProductForm = ({productInfo}) => {
+    const {product,setProduct} = productInfo
+
+    const handleProduct = (e)=>{
+        e.preventDefault() 
+        fetch('http://localhost:5000/products',{
+            method:'POST',
+            headers:{
+                'content-type':'application/json'
+            },
+            body:JSON.stringify(product)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data)
+            toast.success('Product added successfully')
+            e.target.reset()
+        })
+        .catch(err=>console.error(err))
+
+        console.log(product)
+
+        
+    }
+
+    const handleInput = (e)=>{
+
+        const field = e.target.name
+        const value = e.target.value
+
+        const newProduct = {...product}
+        newProduct[field] = value
+        setProduct(newProduct)
+
+    } 
+
+    return (
+        <div className="w-full max-w-md p-8 border border-slate-200 shadow-xl shadow-slate-200 rounded space-y-3  dark:bg-gray-900 dark:text-gray-100">
+	<h1 className="text-2xl font-bold text-center mb-10">Add your product</h1>
+	<form onSubmit={handleProduct} className="space-y-6 ng-untouched ng-pristine ng-valid ">
+    <div className="space-y-1 text-sm">
+			<label htmlFor="image" className="block dark:text-gray-400">Image url</label>
+			<input onChange={handleInput} type="text" name="image" id="image" placeholder="url" className="w-full px-4 py-3 rounded border border-slate-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-sky-400" />
+		</div>
+		<div className="space-y-1 text-sm">
+			<label htmlFor="productname" className="block dark:text-gray-400">Product name</label>
+			<input onChange={handleInput} type="text" name="title" id="productname" placeholder="product title" className="w-full border border-slate-300 px-4 py-3 rounded dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-sky-400" />
+		</div>
+		
+		<div className="space-y-1 text-sm">
+			<label htmlFor="password" className="block dark:text-gray-400">Product Price</label>
+			<input onChange={handleInput} type="text" name="price" id="password" placeholder="product price" className="w-full px-4 py-3 rounded border border-slate-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 focus:dark:border-sky-400" />
+			
+		</div>
+		<button className="block text-slate-50 w-full p-3 text-center rounded-sm dark:text-gray-900 bg-sky-400">Add product</button>
+	</form>
+   
+
+</div>
+    );
+};
+
+export default ProductForm;
